@@ -19,6 +19,48 @@
 //     ocspResponse: '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'
 // }
 
+import { ChangeEvent } from 'react'
+
+export interface SsnInputProps {
+  value: string
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  placeholder: string
+  'data-cy': string
+}
+
+export interface StateWrapperProps {
+  children: JSX.Element
+  isOpen?: boolean
+  toggle: () => void
+}
+
+export interface ContainerProps {
+  children: JSX.Element
+}
+
+export interface UserMessageProps {
+  msg: string
+  'data-cy': string
+}
+
+export interface SpinnerProps {
+  'data-cy': string
+}
+
+export interface BankidButtonProps {
+  type: 'submit'
+  disabled: boolean
+  children: JSX.Element
+  'data-cy': string
+}
+
+export interface CancelButtonProps {
+  type: 'submit'
+  children: JSX.Element
+  onClick: () => void
+  'data-cy': string
+}
+
 type BaseState = {
   status: 'NotInitializedState' | 'PendingState' | 'ErrorState' | 'FailedState' | 'CompleteState'
 }
@@ -31,35 +73,59 @@ export interface BankidResponse {
 }
 
 export type NotInitializedState = {
-  kind: "NotInitializedState"
+  kind: 'NotInitializedState'
   isMobile: boolean
 } & BaseState
 
-export type ErrorCode =  'alreadyInProgress' | 'invalidParameters' | 'unknown' | 'unauthorized' | 'notFound' | 'requestTimeout' | 'unsupportedMediaType' | 'internalError' | 'Maintenance'
+export type ErrorCode =
+  | 'alreadyInProgress'
+  | 'invalidParameters'
+  | 'unknown'
+  | 'unauthorized'
+  | 'notFound'
+  | 'requestTimeout'
+  | 'unsupportedMediaType'
+  | 'internalError'
+  | 'Maintenance'
 
 export type ErrorState = {
-  kind: "ErrorState"
+  kind: 'ErrorState'
   errorCode: ErrorCode
 } & BaseState
 
-export type PendingHintCode = 'outstandingTransaction' | 'noClient' | 'started' | 'userSign' | 'unknown'
+export type PendingHintCode =
+  | 'outstandingTransaction'
+  | 'noClient'
+  | 'started'
+  | 'userSign'
+  | 'unknown'
 
 export type PendingState = {
-  kind: "PendingState"
+  kind: 'PendingState'
   hintCode: PendingHintCode
 } & BaseState
 
-export type FailedHintCode = 'expiredTransaction' | 'certificateErr' | 'userCancel' | 'cancelled' | 'startFailed' | 'unknown'
+export type FailedHintCode =
+  | 'expiredTransaction'
+  | 'certificateErr'
+  | 'userCancel'
+  | 'cancelled'
+  | 'startFailed'
+  | 'unknown'
 
 export type FailedState = {
-  kind: "FailedState"
+  kind: 'FailedState'
   hintCode: FailedHintCode
 } & BaseState
 
 export type CompleteState = {
-  kind: "CompleteState"
+  kind: 'CompleteState'
   completionData: any
 } & BaseState
 
-
-export type CurrentState = NotInitializedState | PendingState | ErrorState | FailedState | CompleteState
+export type CurrentState =
+  | NotInitializedState
+  | PendingState
+  | ErrorState
+  | FailedState
+  | CompleteState
