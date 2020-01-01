@@ -1,26 +1,27 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import {
   BankidButtonProps,
-  BankidResponse,
   CancelButtonProps,
   ContainerProps,
-  CurrentState,
+  ErrorCollectResponse,
   SpinnerProps,
   SsnInputProps,
   StateWrapperProps,
   UserMessageProps
 } from './lib/types'
-import getCurrentState from './lib/bankidResponseToState'
 import { checkValidSwedishSSN } from './lib/check-valid-swedish-ssn'
-import getMessageFromState from './lib/get-message-from-state'
 import Spinner from './spinner'
+import normalizeSwedishSsn from './lib/normalize-swedish-ssn'
+import { CollectResponse } from 'bankid/lib/bankid'
+import getMessageBankIdResponse, { isErrorResponse } from './lib/get-message-bankid-response'
 
 interface IReactBankIDView {
-  currentState: CurrentState
   hasSubmittedOnce: boolean
   isValidSSN: boolean
   BankidButton: JSX.Element | null
   CancelButton: JSX.Element | null
+  bankidResponse?: CollectResponse
+  bankidResponseError?: ErrorCollectResponse
   SsnInput: JSX.Element | null
   StateWrapper?: (props: StateWrapperProps) => JSX.Element | null
   Container?: (props: ContainerProps) => JSX.Element | null
@@ -68,7 +69,7 @@ function ReactBankIDView(props: IReactBankIDView) {
 
   const userMessageProps = {
     'data-cy': 'react-bankid-user-message',
-    msg: getMessageFromState(props.currentState)
+    msg: getMessageBankIdResponse(props.bankidResponse || props.bankidResponseError)
   }
   const UserMessage = props.UserMessage
     ? props.UserMessage(userMessageProps)
@@ -76,10 +77,13 @@ function ReactBankIDView(props: IReactBankIDView) {
 
   const stateWrapperProps = {
     toggle: () => props.onCancelBankidAuth(),
-    isOpen: props.currentState.kind !== 'NotInitializedState',
+    isOpen: Boolean(props.bankidResponse || props.bankidResponseError),
     children: (
       <div>
-        {props.currentState.kind === 'PendingState' && Spinner}
+        {props.bankidResponse &&
+          !isErrorResponse(props.bankidResponse) &&
+          props?.bankidResponse?.status === 'pending' &&
+          Spinner}
         {UserMessage}
         {props.CancelButton}
       </div>
@@ -87,7 +91,7 @@ function ReactBankIDView(props: IReactBankIDView) {
   }
 
   const StateWrapper =
-    props.currentState.kind !== 'NotInitializedState'
+    props.bankidResponse || props.bankidResponseError
       ? props.StateWrapper
         ? props.StateWrapper(stateWrapperProps)
         : DefaultStateWrapper(stateWrapperProps)
@@ -119,8 +123,7 @@ interface IReactBankIDProps {
   onInitiateBankidAuth: (ssn: string) => void
   onCancelBankidAuth: () => void
   onCompleteBankidAuth: (completionData: any) => void
-  bankidResponse?: BankidResponse
-  isMobile: boolean
+  bankidResponse?: CollectResponse | ErrorCollectResponse
   SsnInput?: (props: SsnInputProps) => JSX.Element
   BankidButton?: (props: BankidButtonProps) => JSX.Element
   CancelButton?: (props: CancelButtonProps) => JSX.Element
@@ -133,17 +136,18 @@ interface IReactBankIDProps {
 
 export default function ReactBankID(props: IReactBankIDProps) {
   const [ssn, setSsn] = useState('')
-  const [isValidSSN, setIsValidSSN] = React.useState(false)
+  const [isValidSSN, setIsValidSSN] = React.useState(true)
   const [hasSubmittedOnce, setHasSubmittedOnce] = React.useState(false)
 
-  const currentState = getCurrentState({
-    bankidResponse: props.bankidResponse,
-    isMobile: props.isMobile
-  })
+  const { bankidResponseError, bankidResponse } = !props.bankidResponse
+    ? { bankidResponseError: undefined, bankidResponse: undefined }
+    : isErrorResponse(props.bankidResponse)
+    ? { bankidResponseError: props.bankidResponse, bankidResponse: undefined }
+    : { bankidResponseError: undefined, bankidResponse: props.bankidResponse }
 
   useEffect(() => {
-    if (currentState.kind === 'CompleteState' && props.bankidResponse) {
-      props.onCompleteBankidAuth(props.bankidResponse.completionData)
+    if (bankidResponse?.status === 'complete') {
+      props.onCompleteBankidAuth(bankidResponse.completionData)
     }
   }, [props.bankidResponse])
 
@@ -154,12 +158,11 @@ export default function ReactBankID(props: IReactBankIDProps) {
     children: <span>{props.bankidButtonText}</span>
   }
 
-  const BankidButton =
-    currentState.kind === 'NotInitializedState'
-      ? props.BankidButton
-        ? props.BankidButton(BankidButtonProps)
-        : DefaultBankidButton(BankidButtonProps)
-      : null
+  const BankidButton = !props.bankidResponse
+    ? props.BankidButton
+      ? props.BankidButton(BankidButtonProps)
+      : DefaultBankidButton(BankidButtonProps)
+    : null
 
   const cancelButtonProps = {
     type: 'submit' as 'submit',
@@ -169,9 +172,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
   }
 
   const CancelButton =
-    currentState.kind === 'PendingState' ||
-    currentState.kind === 'FailedState' ||
-    currentState.kind === 'ErrorState'
+    ['pending', 'failed'].includes(bankidResponse?.status || '') || bankidResponseError
       ? props.CancelButton
         ? props.CancelButton(cancelButtonProps)
         : DefaultCancelButton(cancelButtonProps)
@@ -187,12 +188,11 @@ export default function ReactBankID(props: IReactBankIDProps) {
     }
   }
 
-  const SsnInput =
-    currentState.kind === 'NotInitializedState'
-      ? props.SsnInput
-        ? props.SsnInput(ssnInputProps)
-        : DefaultSsnInput(ssnInputProps)
-      : null
+  const SsnInput = !props.bankidResponse
+    ? props.SsnInput
+      ? props.SsnInput(ssnInputProps)
+      : DefaultSsnInput(ssnInputProps)
+    : null
 
   return (
     <div className="d-flex justify-content-center">
@@ -202,10 +202,12 @@ export default function ReactBankID(props: IReactBankIDProps) {
           setHasSubmittedOnce(true)
 
           if (isValidSSN) {
-            return props.onInitiateBankidAuth(ssn)
+            return props.onInitiateBankidAuth(normalizeSwedishSsn(ssn))
           }
         }}>
         <ReactBankIDView
+          bankidResponse={bankidResponse}
+          bankidResponseError={bankidResponseError}
           BankidButton={BankidButton}
           UserMessage={props.UserMessage}
           CancelButton={CancelButton}
@@ -216,7 +218,6 @@ export default function ReactBankID(props: IReactBankIDProps) {
           isValidSSN={isValidSSN}
           onCancelBankidAuth={props.onCancelBankidAuth}
           hasSubmittedOnce={hasSubmittedOnce}
-          currentState={currentState}
         />
       </form>
     </div>

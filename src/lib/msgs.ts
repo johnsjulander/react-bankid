@@ -1,4 +1,4 @@
-import { ErrorCode, FailedHintCode, PendingHintCode } from './types'
+import { FailedHintCode, PendingHintCode } from 'bankid/lib/bankid'
 
 export const scenarioToRfa = {
   // The user access the service using a browser on a personal computer
@@ -27,6 +27,17 @@ export const failedHintCodeToRfa = (key: FailedHintCode) =>
     startFailed: '17',
     unknown: '22'
   }[key])
+
+export type ErrorCode =
+  | 'alreadyInProgress'
+  | 'invalidParameters'
+  | 'unknown'
+  | 'unauthorized'
+  | 'notFound'
+  | 'requestTimeout'
+  | 'unsupportedMediaType'
+  | 'internalError'
+  | 'Maintenance'
 
 export const errorCodesToRfa = (key: ErrorCode) =>
   ({

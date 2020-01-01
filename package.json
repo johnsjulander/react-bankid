@@ -1,8 +1,10 @@
 {
   "name": "react-bankid",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
   "dependencies": {
+    "@apollo/react-components": "^3.1.3",
+    "@apollo/react-hoc": "^3.1.3",
+    "@apollo/react-hooks": "^3.1.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -10,13 +12,22 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.3",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-http": "^1.5.16",
+    "apollo-link-ws": "^1.0.19",
+    "bankid": "^2.0.0",
     "bootstrap": "^4.4.1",
+    "graphql": "^14.5.8",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "reactstrap": "^8.2.0",
+    "subscriptions-transport-ws": "^0.9.16",
     "typescript": "~3.7.2"
   },
   "prettier": {
@@ -31,10 +42,20 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write \"./**/*@(.less|.jsx|.js|.ts|.tsx)\""
+    "prettier": "prettier --write \"./**/*@(.less|.jsx|.js|.ts|.tsx)\"",
+    "gql": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.9.1",
+    "@graphql-codegen/typescript-operations": "^1.9.1",
+    "@graphql-codegen/typescript-react-apollo": "^1.9.1",
+    "@types/reactstrap": "^8.2.0",
+    "cypress": "^3.8.1",
+    "graphql-code-generator": "^0.16.0",
+    "prettier": "^1.19.1"
   },
   "browserslist": {
     "production": [
@@ -47,10 +68,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/reactstrap": "^8.2.0",
-    "cypress": "^3.8.1",
-    "prettier": "^1.19.1"
   }
 }

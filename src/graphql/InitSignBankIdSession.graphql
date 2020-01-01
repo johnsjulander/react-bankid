@@ -1,0 +1,23 @@
+mutation InitSignBankIdSession($id: ID!) {
+    bankId {
+        session(id: $id) {
+            initiateSign {
+                id
+                status
+                name
+                givenName
+                surname
+                deviceIpAddress
+                certNotBefore
+                certNotAfter
+                orderRef
+                signature
+                ocspResponse
+                userVisibleData
+                userNonVisibleData
+                createdAt
+                updatedAt
+            }
+        }
+    }
+}

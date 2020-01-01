@@ -40,7 +40,9 @@ describe('Scenarios', function() {
       cy.get('[data-cy=react-bankid-submit-action-btn]').should('be.disabled')
       cy.get('[data-cy=react-bankid-ssn-input-warning-text]').contains('Ogiltigt personnummer')
       cy.get('[data-cy=react-bankid-ssn-input]').click()
-      cy.get('[data-cy=react-bankid-ssn-input]').type('8711131436')
+      cy.get('[data-cy=react-bankid-ssn-input]')
+        .clear()
+        .type('8711131436')
       cy.get('[data-cy=react-bankid-ssn-input-text]').should('not.exist')
       cy.get('[data-cy=react-bankid-submit-action-btn]').should('be.not.disabled')
     })
@@ -86,7 +88,7 @@ describe('Scenarios', function() {
 
   describe('Custom components', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:3000/custom')
+      cy.visit('http://localhost:3000/customized')
     })
     it('should be able to authenticate', () => {
       cy.get('[data-cy=react-bankid-ssn-input]').click()
@@ -112,7 +114,7 @@ describe('Scenarios', function() {
         .click()
 
       cy.get('[data-cy=react-bankid-debug-complete-btn]').click()
-      cy.url().should('eq', 'http://localhost:3000/custom/authenticated')
+      cy.url().should('eq', 'http://localhost:3000/customized/authenticated')
     })
 
     it('should warn about incorrect ssn values', () => {
@@ -125,7 +127,9 @@ describe('Scenarios', function() {
       cy.get('[data-cy=react-bankid-submit-action-btn]').should('be.disabled')
       cy.get('[data-cy=react-bankid-ssn-input-warning-text]').contains('Ogiltigt personnummer')
       cy.get('[data-cy=react-bankid-ssn-input]').click()
-      cy.get('[data-cy=react-bankid-ssn-input]').type('8711131436')
+      cy.get('[data-cy=react-bankid-ssn-input]')
+        .clear()
+        .type('8711131436')
       cy.get('[data-cy=react-bankid-ssn-input-text]').should('not.exist')
       cy.get('[data-cy=react-bankid-submit-action-btn]').should('be.not.disabled')
     })
@@ -159,7 +163,7 @@ describe('Scenarios', function() {
         .click()
 
       cy.get('[data-cy=react-bankid-debug-complete-btn]').click()
-      cy.url().should('eq', 'http://localhost:3000/custom/authenticated')
+      cy.url().should('eq', 'http://localhost:3000/customized/authenticated')
     })
 
     it('should be able to swap out components', () => {

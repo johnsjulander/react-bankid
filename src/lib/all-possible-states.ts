@@ -1,115 +1,94 @@
-import { IGetCurrentState } from './bankidResponseToState'
+import { CollectResponse } from 'bankid/lib/bankid'
+import { ErrorCollectResponse } from './types'
 
 const allPossibleStates = [
   {
-    isMobile: true,
     'data-cy': 'react-bankid-debug-not-initialized-btn'
   },
   {
-    bankidResponse: { status: 'pending', hintCode: 'outstandingTransaction' },
-    'data-cy': 'react-bankid-debug-outstanding-transaction-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'pending', hintCode: 'outstandingTransaction' },
+    'data-cy': 'react-bankid-debug-outstanding-transaction-btn'
   },
   {
-    bankidResponse: { status: 'pending', hintCode: 'noClient' },
-    'data-cy': 'react-bankid-debug-no-client-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'pending', hintCode: 'noClient' },
+    'data-cy': 'react-bankid-debug-no-client-btn'
   },
   {
-    bankidResponse: { status: 'pending', hintCode: 'started' },
-    'data-cy': 'react-bankid-debug-started-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'pending', hintCode: 'started' },
+    'data-cy': 'react-bankid-debug-started-btn'
   },
   {
-    bankidResponse: { status: 'pending', hintCode: 'userSign' },
-    'data-cy': 'react-bankid-debug-user-sign-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'pending', hintCode: 'userSign' },
+    'data-cy': 'react-bankid-debug-user-sign-btn'
   },
   {
-    bankidResponse: { status: 'pending', hintCode: 'unknown' },
-    'data-cy': 'react-bankid-debug-unknown-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'pending', hintCode: 'unknown' },
+    'data-cy': 'react-bankid-debug-unknown-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'expiredTransaction' },
-    'data-cy': 'react-bankid-debug-expired-transaction-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'expiredTransaction' },
+    'data-cy': 'react-bankid-debug-expired-transaction-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'certificateErr' },
-    'data-cy': 'react-bankid-debug-certificate-err-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'certificateErr' },
+    'data-cy': 'react-bankid-debug-certificate-err-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'userCancel' },
-    'data-cy': 'react-bankid-debug-user-cancel-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'userCancel' },
+    'data-cy': 'react-bankid-debug-user-cancel-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'cancelled' },
-    'data-cy': 'react-bankid-debug-cancelled-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'cancelled' },
+    'data-cy': 'react-bankid-debug-cancelled-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'startFailed' },
-    'data-cy': 'react-bankid-debug-start-failed-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'startFailed' },
+    'data-cy': 'react-bankid-debug-start-failed-btn'
   },
   {
-    bankidResponse: { status: 'failed', hintCode: 'unknown' },
-    'data-cy': 'react-bankid-debug-unknown-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'failed', hintCode: 'unknown' },
+    'data-cy': 'react-bankid-debug-unknown-btn'
   },
   {
     bankidResponse: { errorCode: 'alreadyInProgress' },
-    'data-cy': 'react-bankid-debug-already-in-progress-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-already-in-progress-btn'
   },
   {
     bankidResponse: { errorCode: 'invalidParameters' },
-    'data-cy': 'react-bankid-debug-invalid-parameters-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-invalid-parameters-btn'
   },
   {
     bankidResponse: { errorCode: 'unknown' },
-    'data-cy': 'react-bankid-debug-unknown-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-unknown-btn'
   },
   {
     bankidResponse: { errorCode: 'unauthorized' },
-    'data-cy': 'react-bankid-debug-unauthorized-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-unauthorized-btn'
   },
   {
     bankidResponse: { errorCode: 'notFound' },
-    'data-cy': 'react-bankid-debug-not-found-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-not-found-btn'
   },
   {
     bankidResponse: { errorCode: 'requestTimeout' },
-    'data-cy': 'react-bankid-debug-request-timeout-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-request-timeout-btn'
   },
   {
     bankidResponse: { errorCode: 'unsupportedMediaType' },
-    'data-cy': 'react-bankid-debug-unsupported-media-type-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-unsupported-media-type-btn'
   },
   {
     bankidResponse: { errorCode: 'internalError' },
-    'data-cy': 'react-bankid-debug-internal-error-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-internal-error-btn'
   },
   {
     bankidResponse: { errorCode: 'Maintenance' },
-    'data-cy': 'react-bankid-debug-maintenance-btn',
-    isMobile: true
+    'data-cy': 'react-bankid-debug-maintenance-btn'
   },
   {
-    bankidResponse: { status: 'complete', completionData: {} },
-    'data-cy': 'react-bankid-debug-complete-btn',
-    isMobile: true
+    bankidResponse: { orderRef: '', status: 'complete', completionData: {} },
+    'data-cy': 'react-bankid-debug-complete-btn'
   }
-] as (IGetCurrentState & { 'data-cy': string })[]
+] as { bankidResponse?: CollectResponse | ErrorCollectResponse; 'data-cy': string }[]
 
 export default allPossibleStates

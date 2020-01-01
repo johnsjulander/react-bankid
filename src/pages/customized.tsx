@@ -1,28 +1,35 @@
 import React, { useState } from 'react'
-import DebugButtons from './ReactBankIDDebugButtons'
-import { IGetCurrentState } from './lib/bankidResponseToState'
-import ReactBankID from './ReactBankID'
-import BankIDLogo from './assets/bankid/bankid_white.svg'
+import DebugButtons from '../ReactBankIDDebugButtons'
+import ReactBankID from '../ReactBankID'
+import BankIDLogo from '../assets/bankid/bankid_white.svg'
 import { Button, Card, Input, Modal, ModalBody, Spinner } from 'reactstrap'
 import {
   BankidButtonProps,
   CancelButtonProps,
   ContainerProps,
+  ErrorCollectResponse,
   SsnInputProps,
   StateWrapperProps,
   UserMessageProps
-} from './lib/types'
+} from '../lib/types'
+import { CollectResponse } from 'bankid/lib/bankid'
 
-export default function ReactBankIDWithDebuggerCustom() {
-  const [state, setState] = useState<IGetCurrentState>({ isMobile: false })
+export default function ExampleCustomized() {
+  const [state, setState] = useState<{ bankidResponse?: CollectResponse | ErrorCollectResponse }>(
+    {}
+  )
 
   return (
     <>
-      <DebugButtons onSimulateChangeState={(state: IGetCurrentState) => setState(state)} />
+      <DebugButtons
+        onSimulateChangeBankidResponse={(bankidResponse?: CollectResponse | ErrorCollectResponse) =>
+          setState({ bankidResponse })
+        }
+      />
       <ReactBankID
         bankidButtonText={'Logga in med Mobilt BankID'}
         onCompleteBankidAuth={() => {
-          window.location.href = 'http://localhost:3000/custom/authenticated'
+          window.location.href = 'http://localhost:3000/customized/authenticated'
         }}
         Spinner={props => (
           <div>
@@ -58,19 +65,16 @@ export default function ReactBankIDWithDebuggerCustom() {
         )}
         onInitiateBankidAuth={() =>
           setState({
-            isMobile: true,
             bankidResponse: {
+              orderRef: '',
               status: 'pending',
               hintCode: 'noClient'
             }
           })
         }
         onCancelBankidAuth={() => {
-          setState({
-            isMobile: true
-          })
+          setState({})
         }}
-        isMobile={state.isMobile}
         bankidResponse={state.bankidResponse}
       />
     </>

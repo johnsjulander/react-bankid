@@ -1,0 +1,23 @@
+mutation CreateBankIdSession($input: BankIdSessionsInput!) {
+    bankId {
+        sessions {
+            create(input: $input) {
+                id
+                status
+                name
+                givenName
+                surname
+                deviceIpAddress
+                certNotBefore
+                certNotAfter
+                orderRef
+                signature
+                ocspResponse
+                userVisibleData
+                userNonVisibleData
+                createdAt
+                updatedAt
+            }
+        }
+    }
+}

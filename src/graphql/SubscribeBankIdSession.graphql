@@ -1,0 +1,24 @@
+subscription SubscribeBankIdSession($id: ID!) {
+    bankIdSession(id: $id) {
+        id
+        status
+        name
+        givenName
+        surname
+        deviceIpAddress
+        certNotBefore
+        certNotAfter
+        orderRef
+        signature
+        ocspResponse
+        userVisibleData
+        userNonVisibleData
+        hintCode
+        errorCode
+        details
+        response
+        completionData
+        createdAt
+        updatedAt
+    }
+}
