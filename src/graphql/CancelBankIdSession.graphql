@@ -1,0 +1,7 @@
+mutation CancelBankIdSession($id: ID!) {
+    bankId {
+        session(id: $id) {
+            cancel
+        }
+    }
+}

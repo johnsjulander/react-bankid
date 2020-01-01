@@ -34,7 +34,14 @@ export interface BankidButtonProps {
 }
 
 export interface CancelButtonProps {
-  type: 'submit'
+  type: 'button'
+  children: JSX.Element
+  onClick: () => void
+  'data-cy': string
+}
+
+export interface FailedButtonProps {
+  type: 'button'
   children: JSX.Element
   onClick: () => void
   'data-cy': string

@@ -60,8 +60,8 @@ describe('Scenarios', function() {
 
       cy.get('[data-cy=react-bankid-user-message]').should('have.text', 'Åtgärden avbruten.')
 
-      cy.get('[data-cy=react-bankid-cancel-btn]')
-        .contains('Avbryt')
+      cy.get('[data-cy=react-bankid-failed-btn]')
+        .contains('Tillbaka')
         .click()
 
       cy.get('[data-cy=react-bankid-ssn-input]').should('have.value', '8711131436')
@@ -147,8 +147,8 @@ describe('Scenarios', function() {
 
       cy.get('[data-cy=react-bankid-user-message]').should('have.text', 'Åtgärden avbruten.')
 
-      cy.get('[data-cy=react-bankid-cancel-btn]')
-        .contains('Avbryt')
+      cy.get('[data-cy=react-bankid-failed-btn]')
+        .contains('Tillbaka')
         .click()
 
       cy.get('[data-cy=react-bankid-ssn-input]').should('have.value', '8711131436')

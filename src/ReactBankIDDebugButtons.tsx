@@ -16,14 +16,14 @@ function DebugButtons(props: {
           ? { bankidResponseError: state.bankidResponse, bankidResponse: undefined }
           : { bankidResponseError: undefined, bankidResponse: state.bankidResponse }
 
-        return bankidResponse ? (
+        return bankidResponse || bankidResponseError ? (
           <button
             data-cy={state['data-cy']}
             key={JSON.stringify(state)}
             style={{ margin: 8 }}
             onClick={() =>
-              props.onSimulateChangeBankidResponse(bankidResponse)
-            }>{`${bankidResponse.status ?? 'error'} - ${bankidResponse.hintCode ??
+              props.onSimulateChangeBankidResponse(bankidResponse || bankidResponseError)
+            }>{`${bankidResponse?.status ?? 'error'} - ${bankidResponse?.hintCode ??
             (bankidResponseError && bankidResponseError.errorCode) ??
             ''}`}</button>
         ) : (

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import ReactBankID from '../ReactBankID'
-import { useCreateBankIdSession, useInitSignBankIdSession } from '../graphql/use-mutation'
+import {
+  useCancelBankIdSession,
+  useCreateBankIdSession,
+  useInitSignBankIdSession
+} from '../graphql/use-mutation'
 import { useSubscription } from '@apollo/react-hooks'
 import {
   SubscribeBankIdSessionDocument,
   SubscribeBankIdSessionSubscription,
   SubscribeBankIdSessionSubscriptionVariables
 } from '../graphql/generated-graphql'
-import {FailedHintCode, PendingHintCode} from 'bankid/lib/bankid'
+import { FailedHintCode, PendingHintCode } from 'bankid/lib/bankid'
 
 function ExampleBaseGraphqlContainer(props: any) {
   const subscription = useSubscription<
@@ -15,6 +19,7 @@ function ExampleBaseGraphqlContainer(props: any) {
     SubscribeBankIdSessionSubscriptionVariables
   >(SubscribeBankIdSessionDocument, { variables: { id: props.bankIdSessionId } })
   const [initSignBankIdSession] = useInitSignBankIdSession()
+  const [cancelBankIdSession] = useCancelBankIdSession()
 
   useEffect(() => {
     if (
@@ -29,10 +34,10 @@ function ExampleBaseGraphqlContainer(props: any) {
   const bankIdResponse = !subscription.data
     ? undefined
     : {
-      orderRef: subscription.data?.bankIdSession?.orderRef || '',
-        hintCode: subscription.data?.bankIdSession?.hintCode as (FailedHintCode | PendingHintCode),
+        orderRef: subscription.data?.bankIdSession?.orderRef || '',
+        hintCode: subscription.data?.bankIdSession?.hintCode as FailedHintCode | PendingHintCode,
         errorCode: subscription.data?.bankIdSession?.errorCode,
-        status: subscription.data?.bankIdSession?.status as ("pending" | "failed" | "complete"),
+        status: subscription.data?.bankIdSession?.status as 'pending' | 'failed' | 'complete',
         ...(subscription.data?.bankIdSession?.completionData
           ? { completionData: JSON.parse(subscription.data?.bankIdSession?.completionData) }
           : {})
@@ -46,7 +51,7 @@ function ExampleBaseGraphqlContainer(props: any) {
         }}
         bankidButtonText={'Logga in med Mobilt BankID'}
         onInitiateBankidAuth={props.onInitiateBankidAuth}
-        onCancelBankidAuth={() => {}}
+        onCancelBankidAuth={() => cancelBankIdSession({ variables: { id: props.bankIdSessionId } })}
         bankidResponse={bankIdResponse}
       />
     </div>

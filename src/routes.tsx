@@ -7,9 +7,13 @@ import ExampleCustomized from './pages/customized'
 function Routes() {
   return (
     <Switch>
-      <Route exact path={['/', '/base']} component={ExampleBase} />
+      <Route exact path={['/', '/base', '/authenticated']} component={ExampleBase} />
       <Route exact path="/base-graphql" component={ExampleBaseGraphql} />
-      <Route exact path="/customized" component={ExampleCustomized} />
+      <Route
+        exact
+        path={['/customized', '/customized/authenticated']}
+        component={ExampleCustomized}
+      />
     </Switch>
   )
 }

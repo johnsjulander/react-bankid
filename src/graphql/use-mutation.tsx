@@ -1,4 +1,7 @@
 import {
+  CancelBankIdSessionMutation,
+  CancelBankIdSessionMutationVariables,
+  CancelBankIdSessionDocument,
   CreateBankIdSessionMutation,
   CreateBankIdSessionMutationVariables,
   CreateBankIdSessionDocument,
@@ -7,6 +10,12 @@ import {
   InitSignBankIdSessionDocument
 } from './generated-graphql'
 import { useMutation } from '@apollo/react-hooks'
+
+export const useCancelBankIdSession = () => {
+  return useMutation<CancelBankIdSessionMutation, CancelBankIdSessionMutationVariables>(
+    CancelBankIdSessionDocument
+  )
+}
 
 export const useInitSignBankIdSession = () => {
   return useMutation<InitSignBankIdSessionMutation, InitSignBankIdSessionMutationVariables>(
