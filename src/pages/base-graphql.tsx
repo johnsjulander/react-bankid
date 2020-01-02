@@ -3,6 +3,7 @@ import ReactBankID from '../ReactBankID'
 import {
   useCancelBankIdSession,
   useCreateBankIdSession,
+  useInitAuthBankIdSession,
   useInitSignBankIdSession
 } from '../graphql/use-mutation'
 import { useSubscription } from '@apollo/react-hooks'
@@ -12,13 +13,13 @@ import {
   SubscribeBankIdSessionSubscriptionVariables
 } from '../graphql/generated-graphql'
 import { FailedHintCode, PendingHintCode } from 'bankid/lib/bankid'
+import { useParams } from 'react-router-dom'
 
 function ExampleBaseGraphqlContainer(props: any) {
   const subscription = useSubscription<
     SubscribeBankIdSessionSubscription,
     SubscribeBankIdSessionSubscriptionVariables
   >(SubscribeBankIdSessionDocument, { variables: { id: props.bankIdSessionId } })
-  const [initSignBankIdSession] = useInitSignBankIdSession()
   const [cancelBankIdSession] = useCancelBankIdSession()
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function ExampleBaseGraphqlContainer(props: any) {
       props.bankIdSessionId !== '' &&
       props.bankIdSessionId !== null
     ) {
-      initSignBankIdSession({ variables: { id: props.bankIdSessionId } })
+      props.initBankIdSession({ variables: { id: props.bankIdSessionId } })
     }
   }, [props.bankIdSessionId])
 
@@ -46,12 +47,12 @@ function ExampleBaseGraphqlContainer(props: any) {
   return (
     <div>
       <ReactBankID
-        onCompleteBankidAuth={() => {
+        onCompleteBankid={() => {
           window.location.href = 'http://localhost:3000/authenticated'
         }}
         bankidButtonText={'Logga in med Mobilt BankID'}
-        onInitiateBankidAuth={props.onInitiateBankidAuth}
-        onCancelBankidAuth={() => cancelBankIdSession({ variables: { id: props.bankIdSessionId } })}
+        onInitiateBankid={props.onInitiateBankid}
+        onCancelBankid={() => cancelBankIdSession({ variables: { id: props.bankIdSessionId } })}
         bankidResponse={bankIdResponse}
       />
     </div>
@@ -61,11 +62,15 @@ function ExampleBaseGraphqlContainer(props: any) {
 export default function ExampleBaseGraphql() {
   const [bankIdSessionId, setBankidSessionId] = useState<string | null>('')
   const [createBankIdSession] = useCreateBankIdSession()
+  const [initSignBankIdSession] = useInitSignBankIdSession()
+  const [initAuthBankIdSession] = useInitAuthBankIdSession()
+  let { type } = useParams()
 
   return (
     <ExampleBaseGraphqlContainer
+      initBankIdSession={type === 'auth' ? initAuthBankIdSession : initSignBankIdSession}
       bankIdSessionId={bankIdSessionId}
-      onInitiateBankidAuth={async (ssn: string) => {
+      onInitiateBankid={async (ssn: string) => {
         const { data } = await createBankIdSession({
           variables: { input: { ssn, userVisibleData: 'some-visible-data' } }
         })

@@ -1,0 +1,23 @@
+mutation InitAuthBankIdSession($id: ID!) {
+    bankId {
+        session(id: $id) {
+            initiateAuth {
+                id
+                status
+                name
+                givenName
+                surname
+                deviceIpAddress
+                certNotBefore
+                certNotAfter
+                orderRef
+                signature
+                ocspResponse
+                userVisibleData
+                userNonVisibleData
+                createdAt
+                updatedAt
+            }
+        }
+    }
+}

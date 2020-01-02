@@ -30,7 +30,7 @@ interface IReactBankIDView {
   Container?: (props: ContainerProps) => JSX.Element | null
   UserMessage?: (props: UserMessageProps) => JSX.Element | null
   Spinner?: (props: SpinnerProps) => JSX.Element | null
-  onCancelBankidAuth: () => void
+  onCancelBankid: () => void
 }
 
 function DefaultBankidButton({ children, ...props }: BankidButtonProps) {
@@ -83,7 +83,7 @@ function ReactBankIDView(props: IReactBankIDView) {
     : DefaultUserMessage(userMessageProps)
 
   const stateWrapperProps = {
-    toggle: () => props.onCancelBankidAuth(),
+    toggle: () => props.onCancelBankid(),
     isOpen:
       props?.bankidResponse?.status === 'pending' ||
       ((props.bankidResponse?.status === 'failed' || props.bankidResponseError) &&
@@ -141,9 +141,9 @@ function ReactBankIDView(props: IReactBankIDView) {
 }
 
 interface IReactBankIDProps {
-  onInitiateBankidAuth: (ssn: string) => void
-  onCancelBankidAuth: () => void
-  onCompleteBankidAuth: (completionData: any) => void
+  onInitiateBankid: (ssn: string) => void
+  onCancelBankid: () => void
+  onCompleteBankid: (completionData: any) => void
   bankidResponse?: CollectResponse | ErrorCollectResponse
   SsnInput?: (props: SsnInputProps) => JSX.Element
   BankidButton?: (props: BankidButtonProps) => JSX.Element
@@ -170,7 +170,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
 
   useEffect(() => {
     if (bankidResponse?.status === 'complete') {
-      props.onCompleteBankidAuth(bankidResponse.completionData)
+      props.onCompleteBankid(bankidResponse.completionData)
     }
 
     if (bankidResponse?.status === 'failed' || bankidResponseError) {
@@ -191,7 +191,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
 
   const cancelButtonProps = {
     type: 'button' as 'button',
-    onClick: () => props.onCancelBankidAuth(),
+    onClick: () => props.onCancelBankid(),
     'data-cy': 'react-bankid-cancel-btn',
     children: <span>{'Avbryt'}</span>
   }
@@ -231,7 +231,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
           setHasSubmittedOnce(true)
 
           if (isValidSSN) {
-            return props.onInitiateBankidAuth(normalizeSwedishSsn(ssn))
+            return props.onInitiateBankid(normalizeSwedishSsn(ssn))
           }
         }}>
         <ReactBankIDView
@@ -247,7 +247,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
           Spinner={props.Spinner}
           Container={props.Container}
           isValidSSN={isValidSSN}
-          onCancelBankidAuth={props.onCancelBankidAuth}
+          onCancelBankid={props.onCancelBankid}
           hasSubmittedOnce={hasSubmittedOnce}
         />
       </form>

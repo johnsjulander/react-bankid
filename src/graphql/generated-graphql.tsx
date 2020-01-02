@@ -364,6 +364,39 @@ export type CreateBankIdSessionMutation = { __typename?: 'Mutation' } & {
   >
 }
 
+export type InitAuthBankIdSessionMutationVariables = {
+  id: Scalars['ID']
+}
+
+export type InitAuthBankIdSessionMutation = { __typename?: 'Mutation' } & {
+  bankId: Maybe<
+    { __typename?: 'BankIdMutation' } & {
+      session: Maybe<
+        { __typename?: 'BankIdSessionMutation' } & {
+          initiateAuth: { __typename?: 'BankIdSession' } & Pick<
+            BankIdSession,
+            | 'id'
+            | 'status'
+            | 'name'
+            | 'givenName'
+            | 'surname'
+            | 'deviceIpAddress'
+            | 'certNotBefore'
+            | 'certNotAfter'
+            | 'orderRef'
+            | 'signature'
+            | 'ocspResponse'
+            | 'userVisibleData'
+            | 'userNonVisibleData'
+            | 'createdAt'
+            | 'updatedAt'
+          >
+        }
+      >
+    }
+  >
+}
+
 export type InitSignBankIdSessionMutationVariables = {
   id: Scalars['ID']
 }
@@ -554,6 +587,84 @@ export type CreateBankIdSessionMutationResult = ApolloReactCommon.MutationResult
 export type CreateBankIdSessionMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateBankIdSessionMutation,
   CreateBankIdSessionMutationVariables
+>
+export const InitAuthBankIdSessionDocument = gql`
+  mutation InitAuthBankIdSession($id: ID!) {
+    bankId {
+      session(id: $id) {
+        initiateAuth {
+          id
+          status
+          name
+          givenName
+          surname
+          deviceIpAddress
+          certNotBefore
+          certNotAfter
+          orderRef
+          signature
+          ocspResponse
+          userVisibleData
+          userNonVisibleData
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`
+export type InitAuthBankIdSessionMutationFn = ApolloReactCommon.MutationFunction<
+  InitAuthBankIdSessionMutation,
+  InitAuthBankIdSessionMutationVariables
+>
+export type InitAuthBankIdSessionComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    InitAuthBankIdSessionMutation,
+    InitAuthBankIdSessionMutationVariables
+  >,
+  'mutation'
+>
+
+export const InitAuthBankIdSessionComponent = (props: InitAuthBankIdSessionComponentProps) => (
+  <ApolloReactComponents.Mutation<
+    InitAuthBankIdSessionMutation,
+    InitAuthBankIdSessionMutationVariables
+  >
+    mutation={InitAuthBankIdSessionDocument}
+    {...props}
+  />
+)
+
+export type InitAuthBankIdSessionProps<TChildProps = {}> =
+  | ApolloReactHoc.MutateProps<
+      InitAuthBankIdSessionMutation,
+      InitAuthBankIdSessionMutationVariables
+    >
+  | TChildProps
+export function withInitAuthBankIdSession<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    InitAuthBankIdSessionMutation,
+    InitAuthBankIdSessionMutationVariables,
+    InitAuthBankIdSessionProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    InitAuthBankIdSessionMutation,
+    InitAuthBankIdSessionMutationVariables,
+    InitAuthBankIdSessionProps<TChildProps>
+  >(InitAuthBankIdSessionDocument, {
+    alias: 'initAuthBankIdSession',
+    ...operationOptions
+  })
+}
+export type InitAuthBankIdSessionMutationResult = ApolloReactCommon.MutationResult<
+  InitAuthBankIdSessionMutation
+>
+export type InitAuthBankIdSessionMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  InitAuthBankIdSessionMutation,
+  InitAuthBankIdSessionMutationVariables
 >
 export const InitSignBankIdSessionDocument = gql`
   mutation InitSignBankIdSession($id: ID!) {

@@ -28,7 +28,7 @@ export default function ExampleCustomized() {
       />
       <ReactBankID
         bankidButtonText={'Logga in med Mobilt BankID'}
-        onCompleteBankidAuth={() => {
+        onCompleteBankid={() => {
           window.location.href = 'http://localhost:3000/customized/authenticated'
         }}
         Spinner={props => (
@@ -63,7 +63,7 @@ export default function ExampleCustomized() {
             </ModalBody>
           </Modal>
         )}
-        onInitiateBankidAuth={() =>
+        onInitiateBankid={() =>
           setState({
             bankidResponse: {
               orderRef: '',
@@ -72,7 +72,7 @@ export default function ExampleCustomized() {
             }
           })
         }
-        onCancelBankidAuth={() => {
+        onCancelBankid={() => {
           setState({})
         }}
         bankidResponse={state.bankidResponse}

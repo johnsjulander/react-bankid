@@ -8,7 +8,7 @@ function Routes() {
   return (
     <Switch>
       <Route exact path={['/', '/base', '/authenticated']} component={ExampleBase} />
-      <Route exact path="/base-graphql" component={ExampleBaseGraphql} />
+      <Route exact path={'/base-graphql/:type'} component={ExampleBaseGraphql} />
       <Route
         exact
         path={['/customized', '/customized/authenticated']}

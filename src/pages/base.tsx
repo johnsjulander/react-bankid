@@ -17,11 +17,11 @@ export default function ExampleBase() {
         }
       />
       <ReactBankID
-        onCompleteBankidAuth={() => {
+        onCompleteBankid={() => {
           window.location.href = 'http://localhost:3000/authenticated'
         }}
         bankidButtonText={'Logga in med Mobilt BankID'}
-        onInitiateBankidAuth={() =>
+        onInitiateBankid={() =>
           setState({
             bankidResponse: {
               orderRef: '',
@@ -30,7 +30,7 @@ export default function ExampleBase() {
             }
           })
         }
-        onCancelBankidAuth={() => setState({})}
+        onCancelBankid={() => setState({})}
         bankidResponse={state.bankidResponse}
       />
     </div>
