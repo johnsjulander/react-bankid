@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           start: npm start
-          wait-on: http://localhost:3000
+          wait-on: http://10.1.0.4/
 
       - name: Percy Test
         uses: percy/exec-action@v0.1.2

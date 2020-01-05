@@ -34,6 +34,7 @@ export default function ExampleCustomized() {
         Spinner={props => (
           <div>
             <Spinner {...props} className="text-primary" />
+            <h1>Some damn h1</h1>
           </div>
         )}
         UserMessage={(props: UserMessageProps) => <h3 {...props}>{props.msg}</h3>}
