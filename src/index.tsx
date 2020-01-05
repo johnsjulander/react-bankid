@@ -13,10 +13,10 @@ import { split } from 'apollo-link'
 import Routes from './routes'
 import { getMainDefinition } from 'apollo-utilities'
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000' })
+const httpLink = new HttpLink({ uri: 'http://zigned-backend-live.herokuapp.com/' })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri: `ws://zigned-backend-live.herokuapp.com/graphql`,
   options: {
     reconnect: true
   }

@@ -1,3 +1,5 @@
+require('dotenv').config({ path: `../../.env` })
+
 describe('Scenarios', function() {
   describe('Default components', () => {
     beforeEach(() => {
@@ -91,11 +93,13 @@ describe('Scenarios', function() {
       cy.visit('http://localhost:3000/customized')
     })
     it('should be able to authenticate', () => {
+      cy.percySnapshot('Authentication start')
       cy.get('[data-cy=react-bankid-ssn-input]').click()
       cy.get('[data-cy=react-bankid-ssn-input]').type('8711131436')
       cy.get('[data-cy=react-bankid-submit-action-btn]')
         .contains('Logga in med Mobilt BankID')
         .click()
+      cy.percySnapshot('Authentication loading - Start BankID app')
 
       cy.get('[data-cy=react-bankid-user-message]').should('have.text', 'Starta BankID-appen.')
       cy.get('[data-cy=react-bankid-spinner]').should('be.visible')
@@ -103,6 +107,7 @@ describe('Scenarios', function() {
         .contains('Avbryt')
         .click()
 
+      cy.percySnapshot('Authentication loading - BankID app started, plz sign')
       cy.get('[data-cy=react-bankid-debug-user-sign-btn]').click()
       cy.get('[data-cy=react-bankid-spinner]').should('be.visible')
       cy.get('[data-cy=react-bankid-user-message]').should(
