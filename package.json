@@ -1,9 +1,9 @@
 {
   "name": "react-bankid",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "John Sjulander",
   "license": "MIT",
-  "homepage": "https://https://github.com/johnsjulander/react-bankid#readme",
+  "homepage": "https://github.com/johnsjulander/react-bankid#readme",
   "bugs": {
     "url": "https://github.com/johnsjulander/react-bankid/issues"
   },
