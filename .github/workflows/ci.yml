@@ -13,7 +13,10 @@ jobs:
         uses: cypress-io/github-action@v1
         with:
           start: npm start
-          wait-on: http://localhost:3030
+          wait-on: http://localhost:3000
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       - name: Percy Test
         uses: percy/exec-action@v0.1.2
