@@ -1,7 +1,13 @@
 {
   "name": "react-bankid",
-  "version": "0.1.3",
+  "description": "React component-lib to simplify integration with the Swedish Bank ID service",
+  "version": "0.1.4",
   "author": "John Sjulander",
+  "keywords": [
+    "react",
+    "bankid",
+    "authentication"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/johnsjulander/react-bankid#readme",
   "bugs": {
