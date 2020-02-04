@@ -6,21 +6,32 @@
       "dom.iterable",
       "esnext"
     ],
+    "outDir": "dist",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
+    "sourceMap": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "declaration": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true
   },
   "include": [
-    "src"
+    "./**/*"
   ],
-  "types": ["cypress", "@percy/cypress"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "cypress"
+  ],
+  "types": [
+    "cypress",
+    "@percy/cypress"
+  ]
 }

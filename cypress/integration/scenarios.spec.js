@@ -104,7 +104,6 @@ describe('Scenarios', function() {
       cy.percySnapshot('Authentication loading - Start BankID app')
       cy.screenshot('Authentication loading - Start BankID app')
 
-
       cy.get('[data-cy=react-bankid-user-message]').should('have.text', 'Starta BankID-appen.')
       cy.get('[data-cy=react-bankid-spinner]').should('be.visible')
       cy.get('[data-cy=react-bankid-cancel-btn]')

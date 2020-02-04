@@ -42,6 +42,7 @@ export default function ExampleCustomized() {
           <Button {...props} color="primary">
             <>
               {children}
+              <h1>John har lagt till en ful header igen</h1>
               <img className="ml-2" width={24} src={BankIDLogo} alt="Bank ID logo" />
             </>
           </Button>

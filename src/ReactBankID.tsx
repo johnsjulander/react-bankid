@@ -97,8 +97,8 @@ function ReactBankIDView(props: IReactBankIDView) {
           : UserMessage}
         {props?.bankidResponse?.status === 'pending' && props.CancelButton}
         {(props.bankidResponse?.status === 'failed' || props.bankidResponseError) &&
-          props.showFailedMessage &&
-          props.FailedButton}
+        props.showFailedMessage &&
+        props.FailedButton}
       </div>
     )
   }
@@ -106,8 +106,8 @@ function ReactBankIDView(props: IReactBankIDView) {
   const StateWrapper =
     props.bankidResponse || props.bankidResponseError
       ? props.StateWrapper
-        ? props.StateWrapper(stateWrapperProps)
-        : DefaultStateWrapper(stateWrapperProps)
+      ? props.StateWrapper(stateWrapperProps)
+      : DefaultStateWrapper(stateWrapperProps)
       : null
 
   const containerProps = {
@@ -154,6 +154,7 @@ interface IReactBankIDProps {
   UserMessage?: (props: UserMessageProps) => JSX.Element
   Spinner?: (props: SpinnerProps) => JSX.Element
   bankidButtonText: string
+  showInput?: boolean
 }
 
 export default function ReactBankID(props: IReactBankIDProps) {
@@ -165,8 +166,8 @@ export default function ReactBankID(props: IReactBankIDProps) {
   const { bankidResponseError, bankidResponse } = !props.bankidResponse
     ? { bankidResponseError: undefined, bankidResponse: undefined }
     : isErrorResponse(props.bankidResponse)
-    ? { bankidResponseError: props.bankidResponse, bankidResponse: undefined }
-    : { bankidResponseError: undefined, bankidResponse: props.bankidResponse }
+      ? { bankidResponseError: props.bankidResponse, bankidResponse: undefined }
+      : { bankidResponseError: undefined, bankidResponse: props.bankidResponse }
 
   useEffect(() => {
     if (bankidResponse?.status === 'complete') {
@@ -222,6 +223,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
   }
 
   const SsnInput = props.SsnInput ? props.SsnInput(ssnInputProps) : DefaultSsnInput(ssnInputProps)
+  const showInput = props.showInput || true
 
   return (
     <div className="d-flex justify-content-center">
@@ -237,12 +239,12 @@ export default function ReactBankID(props: IReactBankIDProps) {
         <ReactBankIDView
           bankidResponse={bankidResponse}
           bankidResponseError={bankidResponseError}
-          BankidButton={BankidButton}
+          BankidButton={showInput ? BankidButton : null}
           showFailedMessage={showFailedMessage}
-          FailedButton={FailedButton}
+          FailedButton={showInput ? FailedButton : null}
           UserMessage={props.UserMessage}
-          CancelButton={CancelButton}
-          SsnInput={SsnInput}
+          CancelButton={showInput ? CancelButton : null}
+          SsnInput={showInput ? SsnInput : null}
           StateWrapper={props.StateWrapper}
           Spinner={props.Spinner}
           Container={props.Container}
