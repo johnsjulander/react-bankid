@@ -3,6 +3,8 @@
   "description": "React component-lib to simplify integration with the Swedish Bank ID service",
   "version": "0.1.4",
   "author": "John Sjulander",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "react",
     "bankid",
@@ -38,8 +40,8 @@
     "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
     "node-sass": "^4.13.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
@@ -61,7 +63,8 @@
     "cypress": "percy exec -- cypress run",
     "eject": "react-scripts eject",
     "prettier": "prettier --write \"./**/*@(.less|.jsx|.js|.ts|.tsx)\"",
-    "gql": "graphql-codegen --config codegen.yml"
+    "gql": "graphql-codegen --config codegen.yml",
+    "prepublish": "tsc"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -72,8 +75,8 @@
     "@graphql-codegen/typescript-react-apollo": "^1.9.1",
     "@percy/agent": "^0.20.6",
     "@percy/cypress": "^2.2.0",
-    "@types/reactstrap": "^8.2.0",
     "cypress": "^3.8.1",
+    "@types/reactstrap": "^8.2.0",
     "graphql-code-generator": "^0.16.0",
     "prettier": "^1.19.1"
   },
