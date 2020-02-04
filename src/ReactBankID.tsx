@@ -223,7 +223,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
   }
 
   const SsnInput = props.SsnInput ? props.SsnInput(ssnInputProps) : DefaultSsnInput(ssnInputProps)
-  const showInput = props.showInput || true
+  const showInput = props.showInput ?? true
 
   return (
     <div className="d-flex justify-content-center">

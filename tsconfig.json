@@ -17,7 +17,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "declaration": true,
-    "noEmit": true,
+    "noEmit": false,
     "jsx": "react",
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true
