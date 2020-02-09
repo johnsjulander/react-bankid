@@ -50,6 +50,7 @@ function ExampleBaseGraphqlContainer(props: any) {
         onCompleteBankid={() => {
           window.location.href = 'http://localhost:3000/authenticated'
         }}
+        onFailedButtonClick={() => cancelBankIdSession({ variables: { id: props.bankIdSessionId } })}
         bankidButtonText={'Logga in med Mobilt BankID'}
         onInitiateBankid={props.onInitiateBankid}
         onCancelBankid={() => cancelBankIdSession({ variables: { id: props.bankIdSessionId } })}

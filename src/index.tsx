@@ -1,6 +1,6 @@
 import React from 'react'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import './styles.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import './styles.css'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-client'
