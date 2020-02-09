@@ -21,6 +21,9 @@ export default function ExampleBase() {
           window.location.href = 'http://localhost:3000/authenticated'
         }}
         bankidButtonText={'Logga in med Mobilt BankID'}
+        onFailedButtonClick={() => {
+          console.log('clicked failed button. Insert session-restart here')
+        }}
         onInitiateBankid={() =>
           setState({
             bankidResponse: {

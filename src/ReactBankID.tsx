@@ -143,6 +143,7 @@ function ReactBankIDView(props: IReactBankIDView) {
 interface IReactBankIDProps {
   onInitiateBankid: (ssn: string) => void
   onCancelBankid: () => void
+  onFailedButtonClick: () => void
   onCompleteBankid: (completionData: any) => void
   bankidResponse?: CollectResponse | ErrorCollectResponse
   SsnInput?: (props: SsnInputProps) => JSX.Element
@@ -203,7 +204,10 @@ export default function ReactBankID(props: IReactBankIDProps) {
 
   const failedButtonProps = {
     type: 'button' as 'button',
-    onClick: () => setShowFailedMessage(false),
+    onClick: () => {
+      setShowFailedMessage(false)
+      props.onFailedButtonClick()
+    },
     'data-cy': 'react-bankid-failed-btn',
     children: <span>{'Tillbaka'}</span>
   }

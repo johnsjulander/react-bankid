@@ -1,7 +1,7 @@
 {
   "name": "react-bankid",
   "description": "React component-lib to simplify integration with the Swedish Bank ID service",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "author": "John Sjulander",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

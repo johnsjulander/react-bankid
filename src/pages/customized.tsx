@@ -31,6 +31,9 @@ export default function ExampleCustomized() {
         onCompleteBankid={() => {
           window.location.href = 'http://localhost:3000/customized/authenticated'
         }}
+        onFailedButtonClick={() => {
+          console.log('clicked failed button. Insert session-restart here')
+        }}
         Spinner={props => (
           <div>
             <Spinner {...props} className="text-primary" />
@@ -42,7 +45,6 @@ export default function ExampleCustomized() {
           <Button {...props} color="primary">
             <>
               {children}
-              <h1>John har lagt till en ful header igen</h1>
               <img className="ml-2" width={24} src={BankIDLogo} alt="Bank ID logo" />
             </>
           </Button>
