@@ -14,12 +14,13 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "outDir": "dist",
     "noEmit": false,
-    "jsx": "react"
+    "jsx": "react",
+    "declaration": true
   },
   "include": [
     "./**/*"

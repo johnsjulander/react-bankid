@@ -230,7 +230,7 @@ export default function ReactBankID(props: IReactBankIDProps) {
   const showInput = props.showInput ?? true
 
   return (
-    <div className="d-flex justify-content-center">
+    <div>
       <form
         onSubmit={e => {
           e.preventDefault()
